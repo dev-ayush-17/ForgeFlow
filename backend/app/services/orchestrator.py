@@ -1,8 +1,8 @@
 """
 Orchestra MVP — Orchestrator service.
 
-Dispatches specialized agents in parallel, aggregates results
-into a single ProjectBlueprint.
+Dispatches specialized agents with staggered timing to avoid
+rate-limiting, then aggregates results into a ProjectBlueprint.
 """
 import asyncio
 import uuid
@@ -25,13 +25,6 @@ from app.models.agent_outputs import (
 
 logger = logging.getLogger(__name__)
 
-# Singleton agent instances
-_architect = ArchitectAgent()
-_designer = DesignerAgent()
-_strategist = StrategistAgent()
-_documentation = DocumentationAgent()
-_planner = PlannerAgent()
-
 
 def _extract_project_name(idea: str) -> str:
     """Extract a short project name from the idea text."""
@@ -41,22 +34,36 @@ def _extract_project_name(idea: str) -> str:
     return " ".join(words[:5]) + "..."
 
 
+async def _run_agent_with_delay(agent, idea: str, delay: float):
+    """Run an agent after an initial delay to stagger API calls."""
+    if delay > 0:
+        await asyncio.sleep(delay)
+    return await agent.execute(idea)
+
+
 async def generate_blueprint(idea: str) -> ProjectBlueprint:
     """
-    Execute all 5 agents in parallel and aggregate into a ProjectBlueprint.
+    Execute all 5 agents with staggered starts to avoid rate limits,
+    then aggregate into a ProjectBlueprint.
     """
     logger.info("Starting full blueprint generation...")
 
-    # Run all agents concurrently
+    architect = ArchitectAgent()
+    designer = DesignerAgent()
+    strategist = StrategistAgent()
+    documentation = DocumentationAgent()
+    planner = PlannerAgent()
+
+    # Stagger agent launches by 2 seconds each to stay under RPM limits
     results = await asyncio.gather(
-        _architect.execute(idea),
-        _designer.execute(idea),
-        _strategist.execute(idea),
-        _documentation.execute(idea),
-        _planner.execute(idea),
+        _run_agent_with_delay(architect, idea, 0),
+        _run_agent_with_delay(designer, idea, 2),
+        _run_agent_with_delay(strategist, idea, 4),
+        _run_agent_with_delay(documentation, idea, 6),
+        _run_agent_with_delay(planner, idea, 8),
     )
 
-    architecture, design, pitch_deck, documentation, planning = results
+    architecture, design, pitch_deck, documentation_out, planning = results
 
     blueprint = ProjectBlueprint(
         project=ProjectMeta(
@@ -68,7 +75,7 @@ async def generate_blueprint(idea: str) -> ProjectBlueprint:
         architecture=architecture,
         design=design,
         pitch_deck=pitch_deck,
-        documentation=documentation,
+        documentation=documentation_out,
         planning=planning,
     )
 
@@ -85,11 +92,11 @@ async def regenerate_section(
     Regenerate a single section of the blueprint while preserving all others.
     """
     agent_map = {
-        "architecture": _architect,
-        "design": _designer,
-        "pitch-deck": _strategist,
-        "documentation": _documentation,
-        "planning": _planner,
+        "architecture": ArchitectAgent(),
+        "design": DesignerAgent(),
+        "pitch-deck": StrategistAgent(),
+        "documentation": DocumentationAgent(),
+        "planning": PlannerAgent(),
     }
 
     # Map route section name to blueprint field name

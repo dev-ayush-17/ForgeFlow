@@ -1,0 +1,70 @@
+{
+  "personas": [
+    {
+      "name": "Priya Sharma",
+      "role": "Startup Founder / CEO",
+      "goals": ["Validate my product idea quickly", "Generate a professional pitch deck for investors", "Get a clear technical roadmap without hiring a CTO"]
+    },
+    {
+      "name": "Marcus Chen",
+      "role": "Product Manager at a Growth-Stage Startup",
+      "goals": ["Break down a new feature into engineering sprints", "Document requirements for the dev team", "Align stakeholders on architecture decisions"]
+    },
+    {
+      "name": "Aisha Williams",
+      "role": "Solo Developer / Indie Hacker",
+      "goals": ["Go from idea to MVP plan in minutes", "Understand what tech stack to choose", "Have a clear set of user stories to build against"]
+    },
+    {
+      "name": "James Rodriguez",
+      "role": "Hackathon Participant",
+      "goals": ["Rapidly scope a project idea", "Generate a convincing demo narrative", "Plan 48 hours of focused development work"]
+    }
+  ],
+  "flows": [
+    {
+      "name": "Idea to Blueprint",
+      "steps": ["Land on homepage", "Enter project idea in the hero input", "Click 'Generate Blueprint'", "Watch real-time agent progress on generation screen", "Review complete blueprint on the dashboard"]
+    },
+    {
+      "name": "Review Architecture",
+      "steps": ["Navigate to Architecture tab", "Inspect recommended tech stack cards", "Review system topology diagram", "Browse database schema and API endpoints", "Optionally click 'Regenerate' for a fresh take"]
+    },
+    {
+      "name": "Prepare Pitch Deck",
+      "steps": ["Navigate to Pitch Deck tab", "Review Problem and Solution slides", "Check market analysis and business model", "Examine go-to-market strategy", "Export or screenshot slides for presentation"]
+    },
+    {
+      "name": "Plan Development Sprints",
+      "steps": ["Navigate to Planning tab", "Review sprint breakdown with objectives", "Check milestone timeline", "Review team role recommendations", "Share plan with co-founders or team"]
+    }
+  ],
+  "screens": [
+    {"name": "Landing Page", "purpose": "First impression — hero section with idea input, agent showcase cards, and feature highlights"},
+    {"name": "Generation Screen", "purpose": "Real-time progress view showing all 5 AI agents executing in parallel with status indicators"},
+    {"name": "Dashboard — Architecture Tab", "purpose": "Displays recommended tech stack, system topology diagram, database schema, and API endpoints"},
+    {"name": "Dashboard — Wireframes Tab", "purpose": "Shows user personas, user flows, screen inventory, and component wireframe specs"},
+    {"name": "Dashboard — Pitch Deck Tab", "purpose": "Investor-ready slides covering problem, solution, market, business model, GTM, and roadmap"},
+    {"name": "Dashboard — Documentation Tab", "purpose": "Professional PRD with problem statement, product vision, user stories, and requirements"},
+    {"name": "Dashboard — Planning Tab", "purpose": "Actionable sprint plan, milestones, development timeline, and team role recommendations"},
+    {"name": "Error / Empty State", "purpose": "Graceful error handling when generation fails, with clear retry options"}
+  ],
+  "wireframes": [
+    {
+      "screen": "Landing Page",
+      "components": ["Navbar with logo and CTA", "Hero section with gradient heading and textarea", "5 Agent showcase cards with icons", "3-column feature grid", "Benefits section with mock blueprint preview", "Footer with social links"]
+    },
+    {
+      "screen": "Generation Screen",
+      "components": ["Animated orchestration hub with progress ring", "5 Agent progress cards showing status badges", "Cancel process button", "Status bar with agent count"]
+    },
+    {
+      "screen": "Dashboard — Architecture Tab",
+      "components": ["Sidebar navigation", "Tech stack category cards (Frontend, Backend, DB, Infra)", "System topology SVG diagram", "Database schema table", "API endpoints table with method badges", "Scalability summary cards", "Regenerate section button"]
+    },
+    {
+      "screen": "Dashboard — Pitch Deck Tab",
+      "components": ["Slide grid layout (2x3)", "Problem slide with pain points list", "Solution slide with features", "Market slide with TAM data", "Business Model slide", "GTM Strategy slide", "Roadmap timeline slide"]
+    }
+  ]
+}

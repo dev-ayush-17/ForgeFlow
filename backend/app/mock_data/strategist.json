@@ -1,0 +1,82 @@
+{
+  "problem": {
+    "headline": "Building a Startup Is Still a Black Box",
+    "summary": "Founders spend weeks assembling pitch decks, writing technical specs, and planning sprints manually — tasks that should take minutes, not months. Non-technical founders are locked out of architecture decisions, and technical founders waste time on business strategy docs instead of building.",
+    "pain_points": [
+      "Founders waste 40+ hours creating pitch decks and PRDs before writing a single line of code",
+      "Non-technical founders cannot evaluate architecture recommendations without expensive consultants",
+      "Sprint planning is ad-hoc and inconsistent, leading to scope creep and missed deadlines",
+      "Existing tools (Notion, Jira, Google Slides) are disconnected — no single source of truth",
+      "Hackathon teams lose 30% of their time on planning instead of building"
+    ]
+  },
+  "solution": {
+    "headline": "From Idea to Execution-Ready Blueprint in 3 Minutes",
+    "summary": "Orchestra uses 5 specialized AI agents working in parallel to transform a plain-text idea into a complete startup blueprint — covering architecture, wireframes, pitch deck, documentation, and sprint planning. One input, five expert outputs, zero guesswork.",
+    "key_features": [
+      "Multi-agent AI orchestration with parallel execution for speed",
+      "Professional-grade pitch deck content with market analysis and GTM strategy",
+      "Tailored technical architecture recommendations with system topology diagrams",
+      "Sprint-level project plans with milestones, team roles, and deliverables",
+      "One-click section regeneration to iterate without starting over"
+    ]
+  },
+  "market": {
+    "market_size": "$18.2 billion Total Addressable Market — spanning project management ($7.2B), AI developer tools ($5.8B), and pitch deck / startup tools ($5.2B). Growing at 24% CAGR driven by AI adoption.",
+    "target_users": [
+      "Early-stage startup founders (pre-seed to Series A) — 5.4 million new startups globally per year",
+      "Product managers at growth-stage companies needing rapid feature scoping",
+      "Hackathon participants (2 million+ annually) needing fast project planning",
+      "Indie hackers and solopreneurs building side projects",
+      "Startup accelerators and incubators running cohort programs"
+    ],
+    "trends": [
+      "AI-native development tools replacing manual workflows (GitHub Copilot, Cursor, v0)",
+      "Rise of solo founders and micro-SaaS — 40% of Y Combinator S24 batch were solo founders",
+      "Shift from monolithic planning tools to AI-generated, context-aware outputs",
+      "Growing demand for instant, investor-ready materials in competitive fundraising markets"
+    ]
+  },
+  "business_model": {
+    "revenue_streams": [
+      "Freemium SaaS — 3 free generations/month, unlimited on Pro ($19/mo) and Team ($49/mo/seat)",
+      "Enterprise licenses for accelerators and incubators ($499/mo for cohort access)",
+      "API access for integration into existing developer workflows ($0.10 per generation)",
+      "Premium templates and industry-specific agent configurations"
+    ],
+    "pricing": "Freemium model with generous free tier to drive adoption. Pro tier at $19/month unlocks unlimited generations, export features, and team sharing. Enterprise tier at $499/month includes custom agents, SSO, and priority support."
+  },
+  "go_to_market": {
+    "channels": [
+      "Product Hunt launch targeting #1 Product of the Day",
+      "Developer community seeding on Twitter/X, Reddit r/startups, Hacker News",
+      "Hackathon sponsorships and partnerships (MLH, DevPost)",
+      "Content marketing — 'From Idea to Blueprint' YouTube series and blog",
+      "Startup accelerator partnerships (Y Combinator, Techstars, 500 Global)"
+    ],
+    "acquisition_strategy": "Product-led growth with a viral sharing loop — every generated blueprint includes a 'Powered by Orchestra' watermark. Target 1,000 free users in first month via Product Hunt + Hacker News launch, convert 8% to paid within 90 days."
+  },
+  "roadmap": {
+    "phase_1": "MVP Launch (Month 1-2): 5-agent blueprint generation, web dashboard, basic auth. Target: 500 beta users, validate core value proposition with NPS > 40.",
+    "phase_2": "Growth (Month 3-6): Team collaboration features, PDF/Notion export, custom agent tuning, API access. Target: 5,000 users, $10K MRR, raise pre-seed.",
+    "phase_3": "Scale (Month 7-12): Enterprise features (SSO, audit logs), marketplace for community agents, mobile app, real-time collaboration. Target: 25,000 users, $100K MRR."
+  },
+  "suggestions": [
+    {
+      "title": "Launch at a Major Hackathon First",
+      "description": "Use a hackathon demo as the initial proof of concept. Hackathon participants are the ideal early adopter — they need fast planning, they're tech-savvy, and they share tools virally. A successful hackathon demo creates immediate credibility and a user base."
+    },
+    {
+      "title": "Build Export Integrations Early",
+      "description": "Users will want to take their blueprints into existing tools (Notion, Jira, Linear, Google Slides). Building export integrations in Phase 2 dramatically increases stickiness and bridges the gap between planning and execution."
+    },
+    {
+      "title": "Create Industry-Specific Agent Templates",
+      "description": "Pre-trained agent configurations for common startup verticals (SaaS, marketplace, fintech, healthtech) will significantly improve output quality and reduce the need for prompt engineering by end users."
+    },
+    {
+      "title": "Implement a 'Blueprint Score' Metric",
+      "description": "Add a completeness and quality score to each generated blueprint. This gamifies the experience, encourages regeneration of weak sections, and provides a benchmark that users can share — driving word-of-mouth growth."
+    }
+  ]
+}

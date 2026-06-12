@@ -1,7 +1,11 @@
 """
 Orchestra MVP — Base agent class.
 """
+import os
+import json
 import logging
+import asyncio
+from pathlib import Path
 from abc import ABC, abstractmethod
 from pydantic import ValidationError
 from app.services.gemini import generate_json
@@ -28,6 +32,19 @@ class BaseAgent(ABC):
         """Parse raw JSON dict into a typed Pydantic model."""
         ...
 
+    def _get_mock_response(self) -> dict:
+        """Load mock response based on agent name for DEMO_MODE."""
+        # Map agent name to JSON file name (e.g. "Architect Agent" -> "architect.json")
+        file_name = self.name.lower().replace(" agent", "").replace(" ", "_") + ".json"
+        mock_path = Path(__file__).parent.parent / "mock_data" / file_name
+        
+        if mock_path.exists():
+            with open(mock_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        
+        logger.warning(f"Mock file not found at {mock_path}. Returning empty dict.")
+        return {}
+
     async def execute(self, idea: str) -> object:
         """
         Execute this agent:
@@ -36,6 +53,18 @@ class BaseAgent(ABC):
         3. Parse output into Pydantic model (with retry on validation error)
         """
         logger.info(f"[{self.name}] Starting execution...")
+        
+        is_demo_mode = os.getenv("DEMO_MODE", "false").lower() == "true"
+        
+        if is_demo_mode:
+            logger.info(f"[{self.name}] DEMO_MODE is ON. Using mock response.")
+            raw = self._get_mock_response()
+            # Simulate a small network delay so frontend animations still work smoothly
+            await asyncio.sleep(1.5)
+            result = self._parse_output(raw)
+            logger.info(f"[{self.name}] Completed successfully (Mock).")
+            return result
+
         prompt = self._build_prompt(idea)
 
         last_error = None

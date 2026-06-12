@@ -1,0 +1,119 @@
+{
+  "problem_statement": {
+    "title": "The Planning Gap: Why Great Ideas Die Before They Start",
+    "summary": "Turning a raw startup idea into an actionable plan requires expertise across architecture, design, strategy, and project management. Most founders lack access to this breadth of knowledge, resulting in months of wasted effort on poorly scoped projects, misaligned technical decisions, and investor-repelling pitch materials.",
+    "challenges": [
+      "Founders must context-switch between 5+ disconnected tools to plan a single project",
+      "Technical architecture decisions made without domain expertise lead to costly rewrites later",
+      "Pitch deck creation is time-consuming and requires storytelling skills most engineers lack",
+      "Sprint planning without historical data results in unrealistic timelines and burnout",
+      "Non-technical co-founders are excluded from technical planning conversations"
+    ]
+  },
+  "product_vision": {
+    "vision_statement": "To become the default starting point for every new digital product — making expert-level project planning accessible to anyone with an idea.",
+    "mission": "Democratize startup planning by replacing weeks of manual work with AI-powered, parallel expert analysis that produces execution-ready blueprints in minutes.",
+    "success_metrics": [
+      "Time to first blueprint: < 3 minutes from idea input to complete dashboard",
+      "User activation rate: > 60% of sign-ups generate at least one blueprint",
+      "Blueprint quality NPS: > 50 based on post-generation user survey",
+      "Section regeneration rate: > 40% of users regenerate at least one section (indicates engagement)",
+      "Weekly active users growing > 15% month-over-month in first 6 months"
+    ]
+  },
+  "user_stories": [
+    {
+      "actor": "As a first-time startup founder",
+      "goal": "I want to describe my idea in plain English and get a complete project blueprint",
+      "benefit": "So that I can validate my concept and start building with confidence, even without a technical co-founder"
+    },
+    {
+      "actor": "As a product manager",
+      "goal": "I want to generate detailed functional requirements and user stories from a feature description",
+      "benefit": "So that my engineering team has clear, well-structured specs to work from"
+    },
+    {
+      "actor": "As a hackathon participant",
+      "goal": "I want to instantly scope my project idea into a buildable sprint plan",
+      "benefit": "So that I can maximize my 48 hours of coding time instead of spending hours on planning"
+    },
+    {
+      "actor": "As an indie hacker",
+      "goal": "I want architecture recommendations tailored to my specific project type",
+      "benefit": "So that I choose the right tech stack without analysis paralysis"
+    },
+    {
+      "actor": "As a startup founder raising funding",
+      "goal": "I want to generate a professional pitch deck narrative with market data",
+      "benefit": "So that I can present to investors with confidence, even without a business background"
+    },
+    {
+      "actor": "As a technical lead",
+      "goal": "I want to regenerate specific sections of a blueprint without losing the rest",
+      "benefit": "So that I can iterate on architecture decisions while keeping the overall plan intact"
+    }
+  ],
+  "functional_requirements": [
+    {
+      "id": "FR-001",
+      "title": "Idea Input & Submission",
+      "description": "The system shall accept a free-text project idea (10–2000 characters) via a textarea on the landing page and initiate multi-agent blueprint generation upon submission."
+    },
+    {
+      "id": "FR-002",
+      "title": "Parallel Agent Orchestration",
+      "description": "The system shall dispatch 5 specialized AI agents (Architect, Designer, Strategist, Documentation, Planner) in parallel, with staggered starts to respect rate limits, and aggregate results into a unified ProjectBlueprint."
+    },
+    {
+      "id": "FR-003",
+      "title": "Real-Time Generation Progress",
+      "description": "The generation screen shall display individual progress indicators for each agent, showing states: Queued, Processing, Writing, and Done."
+    },
+    {
+      "id": "FR-004",
+      "title": "Multi-Tab Dashboard View",
+      "description": "The dashboard shall present blueprint results across 5 tabs: Architecture, Wireframes, Pitch Deck, Documentation, and Planning — each rendering agent-specific structured data."
+    },
+    {
+      "id": "FR-005",
+      "title": "Section Regeneration",
+      "description": "Each dashboard tab shall include a Regenerate button that re-executes only the corresponding agent and updates the section in-place without affecting other tabs."
+    },
+    {
+      "id": "FR-006",
+      "title": "Demo Mode",
+      "description": "The system shall support a DEMO_MODE configuration flag that, when enabled, returns predefined mock responses instead of calling external APIs — enabling reliable offline demonstrations."
+    },
+    {
+      "id": "FR-007",
+      "title": "Error Handling & Recovery",
+      "description": "The system shall gracefully handle API failures, rate limits, and network errors — displaying actionable error messages and retry options without crashing the application."
+    }
+  ],
+  "non_functional_requirements": [
+    {
+      "category": "Performance",
+      "requirement": "Full blueprint generation shall complete in under 60 seconds with all 5 agents. Individual section regeneration shall complete in under 15 seconds."
+    },
+    {
+      "category": "Reliability",
+      "requirement": "The system shall maintain 99.5% uptime with automatic retry logic (exponential backoff) for transient API failures. Demo mode shall function with 100% reliability regardless of network status."
+    },
+    {
+      "category": "Security",
+      "requirement": "API keys shall never be exposed to the frontend. All API communication shall use HTTPS. User-submitted ideas shall be sanitized to prevent injection attacks."
+    },
+    {
+      "category": "Scalability",
+      "requirement": "The backend shall support 100 concurrent blueprint generations. Agent execution shall be horizontally scalable via async worker processes."
+    },
+    {
+      "category": "Usability",
+      "requirement": "The application shall be fully responsive (mobile-first) with a dark-mode-first design. All interactive elements shall have loading states and smooth transitions (< 300ms animation duration)."
+    },
+    {
+      "category": "Maintainability",
+      "requirement": "Agent prompts shall be modular and stored in separate files. Adding a new agent shall require only creating a new prompt file, output model, and agent class — no changes to the orchestrator or frontend."
+    }
+  ]
+}

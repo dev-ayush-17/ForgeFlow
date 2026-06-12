@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@450&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.cdnfonts.com/css/geist" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#ddb7ff",
+                    "inverse-surface": "#e5e2e1",
+                    "on-error-container": "#ffdad6",
+                    "surface-bright": "#393939",
+                    "on-tertiary-container": "#461f00",
+                    "on-secondary-fixed-variant": "#6900b3",
+                    "on-secondary-fixed": "#2c0051",
+                    "on-background": "#e5e2e1",
+                    "inverse-on-surface": "#313030",
+                    "primary-fixed": "#d8e2ff",
+                    "surface-container-high": "#2a2a2a",
+                    "secondary-container": "#6f00be",
+                    "on-primary": "#002e6a",
+                    "surface-variant": "#353534",
+                    "on-primary-container": "#00285d",
+                    "surface-container-highest": "#353534",
+                    "tertiary-fixed": "#ffdcc6",
+                    "on-tertiary-fixed-variant": "#723600",
+                    "surface-container": "#201f1f",
+                    "secondary": "#ddb7ff",
+                    "on-primary-fixed": "#001a42",
+                    "surface-container-low": "#1c1b1b",
+                    "on-primary-fixed-variant": "#004395",
+                    "on-error": "#690005",
+                    "primary-container": "#4d8eff",
+                    "tertiary-container": "#df7412",
+                    "on-surface-variant": "#c2c6d6",
+                    "tertiary": "#ffb786",
+                    "primary-fixed-dim": "#adc6ff",
+                    "on-secondary-container": "#d6a9ff",
+                    "on-secondary": "#490080",
+                    "outline-variant": "#424754",
+                    "surface-tint": "#adc6ff",
+                    "surface": "#131313",
+                    "surface-container-lowest": "#0e0e0e",
+                    "error-container": "#93000a",
+                    "inverse-primary": "#005ac2",
+                    "background": "#0e0e0e",
+                    "surface-dim": "#131313",
+                    "outline": "#8c909f",
+                    "on-surface": "#e5e2e1",
+                    "error": "#ffb4ab",
+                    "secondary-fixed": "#f0dbff",
+                    "tertiary-fixed-dim": "#ffb786",
+                    "primary": "#adc6ff",
+                    "on-tertiary": "#502400",
+                    "on-tertiary-fixed": "#311400"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "xs": "8px",
+                    "base": "4px",
+                    "gutter": "24px",
+                    "lg": "48px",
+                    "xl": "80px",
+                    "margin": "32px",
+                    "md": "24px",
+                    "sm": "16px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Geist"],
+                    "label-code": ["JetBrains Mono"],
+                    "display-lg": ["Geist"],
+                    "body-sm": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "label-caps": ["Geist"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-code": ["12px", {"lineHeight": "1.4", "fontWeight": "450"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-caps": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0e0e0e;
+            color: #e5e2e1;
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .shimmer-bg {
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .pulse-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.9); }
+        }
+
+        .agent-card {
+            background: #0a0a0a;
+            border: 1px solid #262626;
+            transition: border-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .agent-card:hover {
+            border-color: #404040;
+        }
+
+        .glow-overlay {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(173, 198, 255, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .progress-fill {
+            transition: width 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<!-- Top Navigation Anchor (Shared Component: TopAppBar) -->
+<nav class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl border-b border-outline-variant/20">
+<div class="flex justify-between items-center px-margin py-4 max-w-7xl mx-auto">
+<div class="font-headline-md text-headline-md font-bold text-on-surface">Orchestra</div>
+<div class="hidden md:flex gap-md items-center">
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Product</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Features</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Pricing</a>
+<button class="bg-primary text-on-primary px-sm py-xs rounded-lg font-medium scale-95 transition-transform duration-150 active:scale-90">Sign Up</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-grow pt-xl pb-lg px-margin max-w-5xl mx-auto w-full flex flex-col items-center">
+<!-- Header Section -->
+<header class="text-center mt-lg mb-xl space-y-base">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Generating Your Project Blueprint</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Our specialized AI agents are crafting your startup vision. Each node handles a specific dimension of your architectural stack.
+            </p>
+</header>
+<!-- Processing Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md w-full">
+<!-- Architecture Agent -->
+<div class="agent-card p-sm rounded-xl relative overflow-hidden group">
+<div class="shimmer-bg absolute inset-0"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="font-headline-md text-headline-md text-on-surface">Architecture Agent</span>
+</div>
+<span class="bg-primary-container/20 text-primary text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded border border-primary/20">Processing</span>
+</div>
+<div class="mb-md">
+<div class="flex justify-between text-on-surface-variant font-label-code text-label-code mb-base">
+<span>Designing System Schema</span>
+<span>85%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="progress-fill bg-primary h-full" style="width: 85%"></div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant/60">
+<span class="material-symbols-outlined text-sm">settings_suggest</span>
+<span class="font-label-code text-[11px]">Validating Kubernetes configuration...</span>
+</div>
+</div>
+</div>
+<!-- UI Agent -->
+<div class="agent-card p-sm rounded-xl relative overflow-hidden group">
+<div class="shimmer-bg absolute inset-0"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">palette</span>
+<span class="font-headline-md text-headline-md text-on-surface">UI Agent</span>
+</div>
+<span class="bg-secondary-container/20 text-secondary text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded border border-secondary/20">In Progress</span>
+</div>
+<div class="mb-md">
+<div class="flex justify-between text-on-surface-variant font-label-code text-label-code mb-base">
+<span>Generating Wireframes</span>
+<span>60%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="progress-fill bg-secondary h-full" style="width: 60%"></div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant/60">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+<span class="font-label-code text-[11px]">Applying Glassmorphism tokens...</span>
+</div>
+</div>
+</div>
+<!-- Documentation Agent -->
+<div class="agent-card p-sm rounded-xl relative overflow-hidden group">
+<div class="shimmer-bg absolute inset-0"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-headline-md text-headline-md text-on-surface">Documentation Agent</span>
+</div>
+<span class="bg-tertiary-container/20 text-tertiary text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded border border-tertiary/20">Writing</span>
+</div>
+<div class="mb-md">
+<div class="flex justify-between text-on-surface-variant font-label-code text-label-code mb-base">
+<span>Writing API Specs</span>
+<span>30%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="progress-fill bg-tertiary h-full" style="width: 30%"></div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant/60">
+<span class="material-symbols-outlined text-sm">terminal</span>
+<span class="font-label-code text-[11px]">Generating Swagger documentation...</span>
+</div>
+</div>
+</div>
+<!-- Pitch Deck Agent -->
+<div class="agent-card p-sm rounded-xl relative overflow-hidden group">
+<div class="shimmer-bg absolute inset-0"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary-fixed-dim" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="font-headline-md text-headline-md text-on-surface">Pitch Deck Agent</span>
+</div>
+<span class="bg-secondary-container/20 text-secondary-fixed-dim text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded border border-secondary-fixed-dim/20">Queued</span>
+</div>
+<div class="mb-md">
+<div class="flex justify-between text-on-surface-variant font-label-code text-label-code mb-base">
+<span>Crafting Narrative</span>
+<span>15%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="progress-fill bg-secondary-fixed-dim h-full" style="width: 15%"></div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant/60">
+<span class="material-symbols-outlined text-sm">history_edu</span>
+<span class="font-label-code text-[11px]">Optimizing value proposition...</span>
+</div>
+</div>
+</div>
+<!-- Project Planner Agent -->
+<div class="agent-card p-sm rounded-xl relative overflow-hidden group border-dashed opacity-70">
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant">calendar_today</span>
+<span class="font-headline-md text-headline-md text-on-surface">Project Planner Agent</span>
+</div>
+<span class="bg-surface-container-high text-on-surface-variant text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded">Waiting</span>
+</div>
+<div class="mb-md">
+<div class="flex justify-between text-on-surface-variant font-label-code text-label-code mb-base">
+<span>Waiting for dependencies</span>
+<span>0%</span>
+</div>
+<div class="w-full bg-surface-container-high h-1 rounded-full overflow-hidden">
+<div class="progress-fill bg-outline h-full" style="width: 0%"></div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-on-surface-variant/60">
+<span class="material-symbols-outlined text-sm">hourglass_empty</span>
+<span class="font-label-code text-[11px]">Awaiting system schema completion...</span>
+</div>
+</div>
+</div>
+<!-- Visual Decorative Placeholder / Status Hub -->
+<div class="agent-card p-sm rounded-xl relative overflow-hidden flex flex-col justify-center items-center gap-sm">
+<div class="glow-overlay"></div>
+<div class="relative w-20 h-20 flex items-center justify-center">
+<div class="absolute inset-0 border-2 border-primary/20 rounded-full border-t-primary animate-spin"></div>
+<span class="material-symbols-outlined text-primary text-3xl pulse-dot" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div class="text-center">
+<p class="font-label-code text-primary text-label-code">Global Orchestration</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Estimated completion: 4m 12s</p>
+</div>
+</div>
+</div>
+<!-- Footer Action Area -->
+<footer class="mt-xl flex flex-col items-center gap-md">
+<div class="flex items-center gap-sm bg-surface-container-low px-md py-sm rounded-full border border-outline-variant/10">
+<span class="flex h-2 w-2 rounded-full bg-primary pulse-dot"></span>
+<span class="font-label-code text-on-surface-variant text-label-code">Status: Processing 4/5 Agents active</span>
+</div>
+<button class="flex items-center gap-xs border border-error/30 text-error hover:bg-error/10 px-md py-xs rounded-lg font-medium transition-all duration-200 active:scale-95 group">
+<span class="material-symbols-outlined text-sm transition-transform group-hover:rotate-90">close</span>
+<span>Cancel Process</span>
+</button>
+</footer>
+</main>
+<!-- Footer (Shared Component) -->
+<footer class="w-full py-lg mt-xl border-t border-outline-variant/10 bg-surface-container-lowest">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin max-w-7xl mx-auto gap-md">
+<div class="font-headline-md text-headline-md font-bold text-on-surface">Orchestra</div>
+<div class="flex gap-md">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Product</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Features</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Pricing</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Multi-Agent Hackathon Builder. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Micro-interactions and simulation
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            
+            // Simulate slight fluctuations in progress
+            setInterval(() => {
+                progressBars.forEach(bar => {
+                    const currentWidth = parseFloat(bar.style.width);
+                    if (currentWidth > 0 && currentWidth < 100) {
+                        const increment = Math.random() * 0.5;
+                        bar.style.width = Math.min(100, currentWidth + increment) + '%';
+                        
+                        // Update the text label
+                        const label = bar.parentElement.previousElementSibling.lastElementChild;
+                        if (label) {
+                            label.innerText = Math.floor(parseFloat(bar.style.width)) + '%';
+                        }
+                    }
+                });
+            }, 3000);
+        });
+    </script>
+</body></html>

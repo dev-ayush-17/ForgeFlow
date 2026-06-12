@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orchestra | Multi-Agent Hackathon Builder</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#df7412",
+                      "secondary-container": "#6f00be",
+                      "on-secondary-container": "#d6a9ff",
+                      "primary": "#adc6ff",
+                      "surface-container-low": "#1c1b1b",
+                      "surface-variant": "#353534",
+                      "on-secondary-fixed": "#2c0051",
+                      "surface-container-high": "#2a2a2a",
+                      "inverse-surface": "#e5e2e1",
+                      "secondary": "#ddb7ff",
+                      "primary-fixed": "#d8e2ff",
+                      "tertiary": "#ffb786",
+                      "on-tertiary-container": "#461f00",
+                      "on-background": "#e5e2e1",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-primary-fixed": "#001a42",
+                      "on-surface-variant": "#c2c6d6",
+                      "surface-container-highest": "#353534",
+                      "outline-variant": "#424754",
+                      "inverse-on-surface": "#313030",
+                      "on-secondary": "#490080",
+                      "on-tertiary-fixed": "#311400",
+                      "on-error-container": "#ffdad6",
+                      "surface-container": "#201f1f",
+                      "surface-bright": "#393939",
+                      "on-primary-fixed-variant": "#004395",
+                      "error-container": "#93000a",
+                      "surface-tint": "#adc6ff",
+                      "surface": "#131313",
+                      "on-secondary-fixed-variant": "#6900b3",
+                      "secondary-fixed": "#f0dbff",
+                      "tertiary-fixed": "#ffdcc6",
+                      "surface-dim": "#131313",
+                      "primary-fixed-dim": "#adc6ff",
+                      "primary-container": "#4d8eff",
+                      "inverse-primary": "#005ac2",
+                      "outline": "#8c909f",
+                      "tertiary-fixed-dim": "#ffb786",
+                      "on-tertiary": "#502400",
+                      "on-error": "#690005",
+                      "on-tertiary-fixed-variant": "#723600",
+                      "error": "#ffb4ab",
+                      "on-primary": "#002e6a",
+                      "background": "#131313",
+                      "on-surface": "#e5e2e1",
+                      "on-primary-container": "#00285d",
+                      "secondary-fixed-dim": "#ddb7ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin": "32px",
+                      "xl": "80px",
+                      "xs": "8px",
+                      "lg": "48px",
+                      "gutter": "24px",
+                      "md": "24px",
+                      "base": "4px",
+                      "sm": "16px"
+              },
+              "fontFamily": {
+                      "label-code": ["JetBrains Mono"],
+                      "label-caps": ["Geist"],
+                      "headline-md": ["Geist"],
+                      "display-lg": ["Geist"],
+                      "body-sm": ["Geist"],
+                      "headline-lg-mobile": ["Geist"],
+                      "headline-lg": ["Geist"],
+                      "body-lg": ["Geist"]
+              },
+              "fontSize": {
+                      "label-code": ["12px", {"lineHeight": "1.4", "fontWeight": "450"}],
+                      "label-caps": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #000000;
+            color: #e5e2e1;
+            font-family: 'Geist', sans-serif;
+        }
+
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid #262626;
+        }
+
+        .agent-card {
+            background: #0a0a0a;
+            border: 1px solid #262626;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .agent-card:hover {
+            border-color: #404040;
+            transform: translateY(-2px);
+            background: #111111;
+        }
+
+        .glow-button {
+            box-shadow: 0 0 20px rgba(173, 198, 255, 0.15);
+            transition: all 0.2s ease;
+        }
+
+        .glow-button:hover {
+            box-shadow: 0 0 30px rgba(173, 198, 255, 0.3);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #adc6ff;
+            box-shadow: 0 0 8px #adc6ff;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="antialiased">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl border-b border-outline-variant/20">
+<div class="flex justify-between items-center px-margin py-4 max-w-7xl mx-auto">
+<div class="font-headline-md text-headline-md font-bold text-on-surface">Orchestra</div>
+<div class="hidden md:flex gap-md items-center">
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-lg text-body-lg" href="#">Product</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-lg text-body-lg" href="#">Features</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-lg text-body-lg" href="#">Pricing</a>
+<button class="bg-primary text-on-primary-container px-sm py-xs font-medium rounded-lg scale-95 transition-transform duration-150 active:scale-90 font-body-lg text-body-lg">Sign Up</button>
+</div>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-xl">
+<!-- Hero Section -->
+<section class="relative px-margin py-xl max-w-7xl mx-auto flex flex-col items-center text-center overflow-hidden">
+<!-- Background Decorative Element -->
+<div class="absolute -top-40 -z-10 w-[800px] h-[800px] bg-primary/5 blur-[120px] rounded-full"></div>
+<div class="inline-flex items-center gap-xs px-sm py-base rounded-full border border-outline-variant/20 bg-surface-container-low mb-md">
+<span class="status-dot"></span>
+<span class="font-label-caps text-label-caps text-primary uppercase">v2.4 Engine Live</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-sm max-w-4xl tracking-tight">
+                From Idea to Execution <span class="text-primary">in Minutes</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-lg leading-relaxed">
+                Generate architecture, UI wireframes, documentation, pitch decks and project plans using specialized AI agents.
+            </p>
+<div class="w-full max-w-3xl glass-panel p-base rounded-xl">
+<div class="relative group">
+<textarea class="w-full h-40 bg-surface-container-lowest border-none focus:ring-0 text-on-surface font-body-lg text-body-lg p-md rounded-lg resize-none placeholder:text-outline/40" placeholder="Describe your hackathon idea (e.g. 'A decentralized carbon credit marketplace using IoT')..."></textarea>
+<div class="absolute bottom-md right-md flex items-center gap-sm">
+<span class="font-label-code text-label-code text-outline/60">Markdown supported</span>
+<button class="glow-button bg-primary text-on-primary-container px-lg py-sm font-bold rounded-lg flex items-center gap-xs scale-95 transition-all duration-150 active:scale-90">
+                            Generate Blueprint
+                            <span class="material-symbols-outlined text-body-lg">bolt</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-lg flex flex-wrap justify-center gap-md items-center opacity-40 grayscale contrast-125">
+<span class="font-label-caps text-label-caps">TRUSTED BY BUILDERS AT</span>
+<div class="flex gap-lg items-center text-on-surface font-bold text-headline-md tracking-tighter">
+<span>LINEAR</span>
+<span>VERCEL</span>
+<span>ANTHROPIC</span>
+<span>SCALE</span>
+</div>
+</div>
+</section>
+<!-- How It Works (Agent Cards) -->
+<section class="px-margin py-xl max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-lg gap-md">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Specialized AI Agents</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">The crew that powers your execution engine.</p>
+</div>
+<div class="font-label-code text-label-code text-primary bg-primary/10 px-sm py-xs border border-primary/20 rounded">
+                    CONCURRENT_PROCESSORS: 04
+                </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Agent 1 -->
+<div class="agent-card p-md rounded-xl flex flex-col h-full">
+<div class="flex items-center justify-between mb-md">
+<span class="material-symbols-outlined text-primary text-[32px]">architecture</span>
+<span class="font-label-code text-label-code text-outline/60">#001</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">The Architect</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex-grow">Defines system structure, selects the optimal tech stack, and charts data flow diagrams.</p>
+<div class="mt-md pt-sm border-t border-outline-variant/10">
+<span class="font-label-caps text-label-caps text-primary">Output: JSON / Mermaid</span>
+</div>
+</div>
+<!-- Agent 2 -->
+<div class="agent-card p-md rounded-xl flex flex-col h-full">
+<div class="flex items-center justify-between mb-md">
+<span class="material-symbols-outlined text-primary text-[32px]">palette</span>
+<span class="font-label-code text-label-code text-outline/60">#002</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">The Designer</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex-grow">Generates low-fi wireframes, color tokens, and atomic UI components for your MVP.</p>
+<div class="mt-md pt-sm border-t border-outline-variant/10">
+<span class="font-label-caps text-label-caps text-primary">Output: Figma / Tailwind</span>
+</div>
+</div>
+<!-- Agent 3 -->
+<div class="agent-card p-md rounded-xl flex flex-col h-full">
+<div class="flex items-center justify-between mb-md">
+<span class="material-symbols-outlined text-primary text-[32px]">edit_note</span>
+<span class="font-label-code text-label-code text-outline/60">#003</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">The Technical Writer</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex-grow">Drafts exhaustive documentation, READMEs, API specs, and setup guides.</p>
+<div class="mt-md pt-sm border-t border-outline-variant/10">
+<span class="font-label-caps text-label-caps text-primary">Output: Markdown</span>
+</div>
+</div>
+<!-- Agent 4 -->
+<div class="agent-card p-md rounded-xl flex flex-col h-full">
+<div class="flex items-center justify-between mb-md">
+<span class="material-symbols-outlined text-primary text-[32px]">insights</span>
+<span class="font-label-code text-label-code text-outline/60">#004</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-xs">The Strategist</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex-grow">Builds convincing pitch decks, roadmaps, and competitive analysis reports.</p>
+<div class="mt-md pt-sm border-t border-outline-variant/10">
+<span class="font-label-caps text-label-caps text-primary">Output: PPTX / PDF</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Features -->
+<section class="bg-surface-container-lowest/50 py-xl border-y border-outline-variant/10">
+<div class="px-margin max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+<div class="flex flex-col gap-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary">groups</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Real-time Collaboration</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Invite your team to tweak the blueprint. Every change propagates across all AI outputs instantly.</p>
+</div>
+<div class="flex flex-col gap-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary">hub</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Multi-Agent Orchestration</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Our proprietary protocol allows agents to debate and refine each other's work for higher accuracy.</p>
+</div>
+<div class="flex flex-col gap-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary">output</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Instant Export</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Download a complete project scaffold. Ready to git commit and start coding immediately.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Benefits -->
+<section class="px-margin py-xl max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-xl items-center">
+<div>
+<h2 class="font-display-lg text-display-lg text-on-surface mb-lg">Ship while others are still brainstorming.</h2>
+<div class="space-y-md">
+<div class="flex gap-md">
+<div class="mt-base"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
+<div>
+<h5 class="font-headline-md text-headline-md text-on-surface">Speed to Market</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Compress months of planning into minutes. Focus 100% on building the unique value of your project.</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="mt-base"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
+<div>
+<h5 class="font-headline-md text-headline-md text-on-surface">Quality Code</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Generate standardized, production-ready boilerplates using the industry's best architectural patterns.</p>
+</div>
+</div>
+<div class="flex gap-md">
+<div class="mt-base"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span></div>
+<div>
+<h5 class="font-headline-md text-headline-md text-on-surface">Alignment</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ensure your designer, developer, and product owner are working from a single, AI-verified source of truth.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute inset-0 bg-primary/10 blur-3xl -z-10 group-hover:bg-primary/20 transition-all duration-500"></div>
+<div class="glass-panel p-md rounded-xl overflow-hidden border-outline-variant/30">
+<img alt="Dashboard Preview" class="w-full h-[400px] object-cover rounded-lg opacity-80 group-hover:opacity-100 transition-opacity duration-500" data-alt="A sophisticated digital dashboard showing real-time code execution and AI agent status panels. The interface is dark, utilizing a deep charcoal and black color palette with glowing blue data streams and technical diagrams. The lighting is low-key, giving a high-tech, futuristic laboratory or command center vibe. The overall aesthetic is minimalist, precise, and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA880yfWpkcAU_qYqdQ2qoUHMBcCqp-UULI6VpiUK5Ssv0AZRGkMFEI2We8xJaS05BTODe1gBZLwqrys1OQ0-E2P8EdwBUZzo866rRdf16eweEmVUMqulGExhaHhUhWaROJUjwHMNp9p4uBEqYbKtPfF5bukaFvlXWy_xVm6JNbj_VmBiIRcypGKh7UCJ-NLOP5lb_pjRUvUKZCsLDBC-TOd05OBm3Ga0fEwfDY_Sq_akWmOZlKseHUalpNKfUebd8bFlmKxPM2W5N_"/>
+<div class="absolute bottom-lg left-lg right-lg p-sm bg-surface/80 backdrop-blur-md rounded border border-outline-variant/20 flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<span class="status-dot"></span>
+<span class="font-label-code text-label-code">AGENTS_READY: TRUE</span>
+</div>
+<span class="font-label-code text-label-code text-primary">SCR-882-BLUEPRINT</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="px-margin py-xl max-w-7xl mx-auto text-center">
+<div class="bg-gradient-to-b from-surface-container-low to-black p-lg rounded-2xl border border-outline-variant/20">
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-sm">Ready to build your next winner?</h3>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-lg">Start for free. No credit card required until you're ready to export.</p>
+<div class="flex flex-col md:flex-row gap-md justify-center">
+<button class="glow-button bg-primary text-on-primary-container px-lg py-sm font-bold rounded-lg scale-95 transition-all duration-150 active:scale-90 font-body-lg text-body-lg">Get Started Free</button>
+<button class="px-lg py-sm border border-outline-variant text-on-surface font-medium rounded-lg hover:border-outline transition-colors font-body-lg text-body-lg">View Examples</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest py-lg mt-xl border-t border-outline-variant/10">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin max-w-7xl mx-auto gap-md">
+<div class="flex flex-col gap-xs items-center md:items-start">
+<div class="font-headline-md text-headline-md font-bold text-on-surface">Orchestra</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Multi-Agent Hackathon Builder. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap gap-md justify-center">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100" href="#">Product</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100" href="#">Features</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100" href="#">Pricing</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200 opacity-80 hover:opacity-100" href="#">Terms</a>
+</div>
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">terminal</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">code</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">public</span>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions for the input box
+        const textarea = document.querySelector('textarea');
+        textarea.addEventListener('focus', () => {
+            textarea.parentElement.parentElement.classList.add('ring-1', 'ring-primary/50');
+        });
+        textarea.addEventListener('blur', () => {
+            textarea.parentElement.parentElement.classList.remove('ring-1', 'ring-primary/50');
+        });
+
+        // Typing effect for placeholders
+        const placeholders = [
+            "A decentralized carbon credit marketplace...",
+            "An AI-powered recipe generator for leftovers...",
+            "A zero-knowledge proof identity system...",
+            "A gamified trash collection app for cities..."
+        ];
+        let pIndex = 0;
+        setInterval(() => {
+            pIndex = (pIndex + 1) % placeholders.length;
+            textarea.placeholder = placeholders[pIndex];
+        }, 3000);
+    </script>
+</body></html>

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orchestra | Architecture Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface": "#131313",
+            "surface-container-high": "#2a2a2a",
+            "tertiary": "#ffb786",
+            "primary-fixed": "#d8e2ff",
+            "outline": "#8c909f",
+            "on-tertiary-fixed-variant": "#723600",
+            "surface-container-lowest": "#0e0e0e",
+            "on-secondary-fixed-variant": "#6900b3",
+            "tertiary-fixed-dim": "#ffb786",
+            "secondary": "#ddb7ff",
+            "on-primary": "#002e6a",
+            "on-error": "#690005",
+            "surface-dim": "#131313",
+            "primary-container": "#4d8eff",
+            "on-surface-variant": "#c2c6d6",
+            "surface-container-highest": "#353534",
+            "on-tertiary-container": "#461f00",
+            "secondary-container": "#6f00be",
+            "surface-tint": "#adc6ff",
+            "on-primary-fixed-variant": "#004395",
+            "on-secondary": "#490080",
+            "inverse-surface": "#e5e2e1",
+            "primary-fixed-dim": "#adc6ff",
+            "primary": "#adc6ff",
+            "error": "#ffb4ab",
+            "on-tertiary": "#502400",
+            "on-secondary-fixed": "#2c0051",
+            "on-tertiary-fixed": "#311400",
+            "tertiary-container": "#df7412",
+            "secondary-fixed-dim": "#ddb7ff",
+            "on-background": "#e5e2e1",
+            "on-primary-fixed": "#001a42",
+            "on-primary-container": "#00285d",
+            "surface-variant": "#353534",
+            "surface-container-low": "#1c1b1b",
+            "inverse-primary": "#005ac2",
+            "surface-container": "#201f1f",
+            "inverse-on-surface": "#313030",
+            "outline-variant": "#424754",
+            "tertiary-fixed": "#ffdcc6",
+            "on-error-container": "#ffdad6",
+            "secondary-fixed": "#f0dbff",
+            "background": "#131313",
+            "on-secondary-container": "#d6a9ff",
+            "error-container": "#93000a",
+            "surface-bright": "#393939",
+            "on-surface": "#e5e2e1"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "md": "24px",
+            "sm": "16px",
+            "gutter": "24px",
+            "xl": "80px",
+            "margin": "32px",
+            "base": "4px",
+            "xs": "8px",
+            "lg": "48px"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Geist"],
+            "display-lg": ["Geist"],
+            "body-sm": ["Geist"],
+            "label-code": ["JetBrains Mono"],
+            "label-caps": ["Geist"],
+            "headline-lg": ["Geist"],
+            "headline-md": ["Geist"],
+            "body-lg": ["Geist"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "label-code": ["12px", { "lineHeight": "1.4", "fontWeight": "450" }],
+            "label-caps": ["11px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      background-color: #000000;
+      color: #e5e2e1;
+      font-family: 'Geist', sans-serif;
+    }
+    .glass-panel {
+      background: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid #262626;
+    }
+    .inner-glow {
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+    }
+    .node-line {
+      stroke: #4d8eff;
+      stroke-dasharray: 4;
+      animation: dash 20s linear infinite;
+    }
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -1000;
+      }
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .status-pulse {
+      box-shadow: 0 0 8px #adc6ff;
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .5; transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body class="antialiased">
+<!-- Main Layout -->
+<div class="flex min-h-screen">
+<!-- Left Sidebar (Fixed 260px) -->
+<aside class="hidden md:flex flex-col w-[260px] fixed h-full bg-[#0a0a0a] border-r border-[#262626] z-50">
+<div class="p-margin">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">Orchestra</h1>
+</div>
+<nav class="flex-1 px-sm space-y-xs">
+<a class="flex items-center gap-xs px-sm py-xs rounded text-on-surface-variant hover:bg-[#171717] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body-sm text-body-sm">Overview</span>
+</a>
+<a class="flex items-center gap-xs px-sm py-xs rounded bg-surface-container-high text-primary font-medium transition-colors border-l-2 border-primary" href="#">
+<span class="material-symbols-outlined text-[20px]">architecture</span>
+<span class="font-body-sm text-body-sm">Architecture</span>
+</a>
+<a class="flex items-center gap-xs px-sm py-xs rounded text-on-surface-variant hover:bg-[#171717] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">smart_toy</span>
+<span class="font-body-sm text-body-sm">Agents</span>
+</a>
+<a class="flex items-center gap-xs px-sm py-xs rounded text-on-surface-variant hover:bg-[#171717] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+<span class="font-body-sm text-body-sm">Execution</span>
+</a>
+<a class="flex items-center gap-xs px-sm py-xs rounded text-on-surface-variant hover:bg-[#171717] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">monitoring</span>
+<span class="font-body-sm text-body-sm">Logs</span>
+</a>
+</nav>
+<div class="p-sm mt-auto border-t border-[#262626]">
+<div class="flex items-center gap-xs p-xs rounded hover:bg-[#171717] cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-[12px]">JD</div>
+<div class="flex-1 overflow-hidden">
+<p class="font-body-sm text-body-sm font-medium truncate">John Developer</p>
+<p class="font-label-code text-label-code text-on-surface-variant">Admin</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-[260px] p-margin lg:p-lg space-y-md max-w-[1400px] mx-auto w-full">
+<!-- Top Header -->
+<header class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-xl">
+<div>
+<div class="flex items-center gap-xs mb-xs">
+<span class="font-label-caps text-label-caps uppercase text-primary tracking-widest">Workspace</span>
+<span class="text-[#262626]">/</span>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-widest">Multi-Agent System v2.1</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">System Architecture</h2>
+</div>
+<div class="flex items-center gap-sm">
+<button class="px-sm py-xs border border-[#262626] rounded-lg font-body-sm text-body-sm hover:border-[#404040] transition-colors flex items-center gap-xs inner-glow">
+<span class="material-symbols-outlined text-[18px]">download</span> Export Spec
+          </button>
+<button class="px-sm py-xs bg-primary text-on-primary rounded-lg font-body-sm text-body-sm font-medium hover:opacity-90 transition-opacity flex items-center gap-xs inner-glow">
+<span class="material-symbols-outlined text-[18px]">publish</span> Deploy Changes
+          </button>
+</div>
+</header>
+<!-- Bento Grid Content -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Tech Stack Card -->
+<section class="lg:col-span-4 bg-[#0a0a0a] border border-[#262626] rounded-xl overflow-hidden flex flex-col">
+<div class="p-sm border-b border-[#262626] flex items-center justify-between">
+<h3 class="font-headline-md text-[16px] text-on-surface font-semibold flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">layers</span> Recommended Tech Stack
+            </h3>
+<span class="px-xs py-[2px] bg-primary/10 text-primary font-label-code text-[10px] rounded border border-primary/20 uppercase tracking-wider">Verified</span>
+</div>
+<div class="p-sm flex-1 space-y-md">
+<div class="flex items-start gap-sm">
+<div class="p-xs bg-[#171717] rounded-lg border border-[#262626]">
+<span class="material-symbols-outlined text-on-surface-variant">web</span>
+</div>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm font-medium text-on-surface">Frontend</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Next.js 14, TypeScript, Tailwind CSS</p>
+</div>
+</div>
+<div class="flex items-start gap-sm">
+<div class="p-xs bg-[#171717] rounded-lg border border-[#262626]">
+<span class="material-symbols-outlined text-on-surface-variant">terminal</span>
+</div>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm font-medium text-on-surface">Backend</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Go (Gin), Python (FastAPI) for AI</p>
+</div>
+</div>
+<div class="flex items-start gap-sm">
+<div class="p-xs bg-[#171717] rounded-lg border border-[#262626]">
+<span class="material-symbols-outlined text-on-surface-variant">database</span>
+</div>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm font-medium text-on-surface">Database</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">PostgreSQL (Primary), Redis (Cache)</p>
+</div>
+</div>
+<div class="flex items-start gap-sm">
+<div class="p-xs bg-[#171717] rounded-lg border border-[#262626]">
+<span class="material-symbols-outlined text-on-surface-variant">cloud</span>
+</div>
+<div class="flex-1">
+<p class="font-body-sm text-body-sm font-medium text-on-surface">Infrastructure</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">AWS, Kubernetes, Terraform</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Architecture Diagram Card -->
+<section class="lg:col-span-8 bg-[#0a0a0a] border border-[#262626] rounded-xl overflow-hidden min-h-[400px] flex flex-col relative">
+<div class="p-sm border-b border-[#262626] flex items-center justify-between">
+<h3 class="font-headline-md text-[16px] text-on-surface font-semibold flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">account_tree</span> System Topology
+            </h3>
+<div class="flex gap-xs">
+<button class="p-xs hover:bg-[#171717] rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">zoom_in</span></button>
+<button class="p-xs hover:bg-[#171717] rounded text-on-surface-variant"><span class="material-symbols-outlined text-[18px]">fullscreen</span></button>
+</div>
+</div>
+<div class="flex-1 bg-[#050505] relative overflow-hidden flex items-center justify-center">
+<!-- Simulated Node Diagram (SVG) -->
+<svg class="w-full h-full max-w-[600px] max-h-[300px]" fill="none" viewbox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+<path class="node-line" d="M150 150 H300 M300 150 L450 75 M300 150 L450 225" stroke-width="1.5"></path>
+<!-- API Gateway Node -->
+<g transform="translate(100, 125)">
+<rect fill="#131313" height="50" rx="4" stroke="#262626" width="100"></rect>
+<text fill="#e5e2e1" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="50" y="30">API GATEWAY</text>
+<circle cx="100" cy="25" fill="#adc6ff" r="3"></circle>
+</g>
+<!-- Orchestrator Node -->
+<g transform="translate(250, 125)">
+<rect fill="#131313" height="50" rx="4" stroke="#adc6ff" stroke-width="1.5" width="100"></rect>
+<text fill="#adc6ff" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="50" y="30">ORCHESTRATOR</text>
+<circle cx="0" cy="25" fill="#adc6ff" r="3"></circle>
+</g>
+<!-- Agent 1 -->
+<g transform="translate(450, 50)">
+<rect fill="#131313" height="50" rx="4" stroke="#262626" width="100"></rect>
+<text fill="#e5e2e1" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="50" y="30">SQL AGENT</text>
+<circle cx="0" cy="25" fill="#4d8eff" r="3"></circle>
+</g>
+<!-- Agent 2 -->
+<g transform="translate(450, 200)">
+<rect fill="#131313" height="50" rx="4" stroke="#262626" width="100"></rect>
+<text fill="#e5e2e1" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="50" y="30">SEARCH AGENT</text>
+<circle cx="0" cy="25" fill="#4d8eff" r="3"></circle>
+</g>
+</svg>
+<div class="absolute bottom-xs right-xs bg-[#0a0a0a]/80 backdrop-blur-md px-sm py-xs border border-[#262626] rounded flex items-center gap-sm">
+<div class="flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-primary status-pulse"></div>
+<span class="font-label-code text-label-code text-on-surface">Active Flow</span>
+</div>
+<div class="flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-[#262626]"></div>
+<span class="font-label-code text-label-code text-on-surface-variant">Idle</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Database Schema Card -->
+<section class="lg:col-span-6 bg-[#0a0a0a] border border-[#262626] rounded-xl overflow-hidden flex flex-col">
+<div class="p-sm border-b border-[#262626] flex items-center justify-between">
+<h3 class="font-headline-md text-[16px] text-on-surface font-semibold flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">storage</span> Database Schema
+            </h3>
+<span class="font-label-code text-label-code text-on-surface-variant">PostgreSQL v15</span>
+</div>
+<div class="p-sm grid grid-cols-1 md:grid-cols-2 gap-sm">
+<!-- Table 1 -->
+<div class="border border-[#262626] rounded bg-[#131313]">
+<div class="bg-[#1a1a1a] p-xs border-b border-[#262626] flex justify-between items-center">
+<span class="font-label-code text-label-code font-bold text-on-surface">users</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">key</span>
+</div>
+<div class="p-xs space-y-1">
+<div class="flex justify-between font-label-code text-[11px]">
+<span class="text-on-surface">id <span class="text-primary-container opacity-60">PK</span></span>
+<span class="text-on-surface-variant">uuid</span>
+</div>
+<div class="flex justify-between font-label-code text-[11px]">
+<span class="text-on-surface">email</span>
+<span class="text-on-surface-variant">varchar(255)</span>
+</div>
+<div class="flex justify-between font-label-code text-[11px]">
+<span class="text-on-surface">role</span>
+<span class="text-on-surface-variant">enum</span>
+</div>
+<div class="flex justify-between font-label-code text-[11px]">
+<span class="text-on-surface">created_at</span>
+<span class="text-on-surface-variant">timestamp</span>
+</div>
+</div>
+</div>
+<!-- Table 2 -->
+<div class="border border-[#262626] rounded bg-[#131313]">
+<div class="bg-[#1a1a1a] p-xs border-b border-[#262626] flex justify-between items-center">
+<span class="font-label-code text-label-code font-bold text-on-surface">agent_logs</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">link</span>
+</div>
+<div class="p-xs space-y-1">
+<div class="flex justify-between font-label-code text-[11px]">
+<span class="text-on-surface">id <span class="text-primary-container opacity-60">PK</span></span>
+<span class="text-on-surface-variant">serial</span>
+</div>
+<div class="flex justify-between font-label-code text-[11px]">
+<span class="text-on-surface">user_id <span class="text-secondary opacity-60">FK</span></span>
+<span class="text-on-surface-variant">uuid</span>
+</div>
+<div class="flex justify-between font-label-code text-[11px]">
+<span class="text-on-surface">payload</span>
+<span class="text-on-surface-variant">jsonb</span>
+</div>
+<div class="flex justify-between font-label-code text-[11px]">
+<span class="text-on-surface">latency</span>
+<span class="text-on-surface-variant">integer</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- API Endpoints Card -->
+<section class="lg:col-span-6 bg-[#0a0a0a] border border-[#262626] rounded-xl overflow-hidden flex flex-col">
+<div class="p-sm border-b border-[#262626] flex items-center justify-between">
+<h3 class="font-headline-md text-[16px] text-on-surface font-semibold flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">api</span> API Core Endpoints
+            </h3>
+<button class="text-primary text-[12px] font-medium hover:underline">View Docs</button>
+</div>
+<div class="flex-1 overflow-y-auto max-h-[250px]">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-[#171717] sticky top-0">
+<tr>
+<th class="px-sm py-xs font-label-caps text-on-surface-variant font-semibold">Method</th>
+<th class="px-sm py-xs font-label-caps text-on-surface-variant font-semibold">Path</th>
+<th class="px-sm py-xs font-label-caps text-on-surface-variant font-semibold">Desc</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#262626]">
+<tr class="hover:bg-[#171717] transition-colors cursor-pointer group">
+<td class="px-sm py-sm"><span class="px-xs py-[2px] bg-emerald-500/10 text-emerald-400 font-label-code text-[10px] rounded">GET</span></td>
+<td class="px-sm py-sm font-label-code text-on-surface">/v1/agents</td>
+<td class="px-sm py-sm text-on-surface-variant">List all active agents</td>
+</tr>
+<tr class="hover:bg-[#171717] transition-colors cursor-pointer group">
+<td class="px-sm py-sm"><span class="px-xs py-[2px] bg-blue-500/10 text-blue-400 font-label-code text-[10px] rounded">POST</span></td>
+<td class="px-sm py-sm font-label-code text-on-surface">/v1/execute</td>
+<td class="px-sm py-sm text-on-surface-variant">Trigger workflow run</td>
+</tr>
+<tr class="hover:bg-[#171717] transition-colors cursor-pointer group">
+<td class="px-sm py-sm"><span class="px-xs py-[2px] bg-orange-500/10 text-orange-400 font-label-code text-[10px] rounded">PATCH</span></td>
+<td class="px-sm py-sm font-label-code text-on-surface">/v1/config/:id</td>
+<td class="px-sm py-sm text-on-surface-variant">Update agent parameters</td>
+</tr>
+<tr class="hover:bg-[#171717] transition-colors cursor-pointer group">
+<td class="px-sm py-sm"><span class="px-xs py-[2px] bg-red-500/10 text-red-400 font-label-code text-[10px] rounded">DELETE</span></td>
+<td class="px-sm py-sm font-label-code text-on-surface">/v1/trace/:id</td>
+<td class="px-sm py-sm text-on-surface-variant">Purge execution logs</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Scalability Notes Card -->
+<section class="lg:col-span-12 bg-[#0a0a0a] border border-[#262626] rounded-xl overflow-hidden">
+<div class="p-sm border-b border-[#262626]">
+<h3 class="font-headline-md text-[16px] text-on-surface font-semibold flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">bolt</span> Scalability &amp; Performance Strategy
+            </h3>
+</div>
+<div class="p-sm grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="space-y-xs">
+<div class="flex items-center gap-xs text-primary mb-xs">
+<span class="material-symbols-outlined text-[18px]">horizontal_distribute</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider">Horizontal Scaling</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                Kubernetes Horizontal Pod Autoscaler (HPA) configured for CPU utilization &gt; 70%. Multi-AZ deployment across us-east-1 for 99.99% availability.
+              </p>
+</div>
+<div class="space-y-xs">
+<div class="flex items-center gap-xs text-primary mb-xs">
+<span class="material-symbols-outlined text-[18px]">cached</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider">Caching Strategy</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                Multi-layer caching: L1 (In-memory Go Cache), L2 (Redis Distributed). Write-through policy for database consistency on user metadata.
+              </p>
+</div>
+<div class="space-y-xs">
+<div class="flex items-center gap-xs text-primary mb-xs">
+<span class="material-symbols-outlined text-[18px]">public</span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider">CDN Usage</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                CloudFront with Lambda@Edge for dynamic content compression and global asset delivery. Origin Shield enabled to reduce backend load.
+              </p>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="pt-xl flex flex-col md:flex-row justify-between items-center gap-sm opacity-50">
+<p class="font-body-sm text-body-sm">© 2024 Multi-Agent Hackathon Builder. All rights reserved.</p>
+<div class="flex gap-md">
+<a class="font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Security</a>
+<a class="font-body-sm text-body-sm hover:text-primary transition-colors" href="#">Status</a>
+</div>
+</footer>
+</main>
+</div>
+<!-- Interaction Scripts -->
+<script>
+    // Micro-interaction for diagram nodes
+    document.querySelectorAll('g').forEach(node => {
+      node.addEventListener('mouseenter', () => {
+        const rect = node.querySelector('rect');
+        if (rect) {
+          rect.style.transition = 'all 0.2s ease';
+          rect.style.stroke = '#adc6ff';
+          rect.style.fill = '#171717';
+        }
+      });
+      node.addEventListener('mouseleave', () => {
+        const rect = node.querySelector('rect');
+        if (rect && rect.getAttribute('stroke') !== '#adc6ff') {
+          rect.style.stroke = '#262626';
+          rect.style.fill = '#131313';
+        }
+      });
+    });
+  </script>
+</body></html>

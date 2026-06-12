@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orchestra | Pitch Deck Generator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface": "#131313",
+            "surface-container-high": "#2a2a2a",
+            "tertiary": "#ffb786",
+            "primary-fixed": "#d8e2ff",
+            "outline": "#8c909f",
+            "on-tertiary-fixed-variant": "#723600",
+            "surface-container-lowest": "#0e0e0e",
+            "on-secondary-fixed-variant": "#6900b3",
+            "tertiary-fixed-dim": "#ffb786",
+            "secondary": "#ddb7ff",
+            "on-primary": "#002e6a",
+            "on-error": "#690005",
+            "surface-dim": "#131313",
+            "primary-container": "#4d8eff",
+            "on-surface-variant": "#c2c6d6",
+            "surface-container-highest": "#353534",
+            "on-tertiary-container": "#461f00",
+            "secondary-container": "#6f00be",
+            "surface-tint": "#adc6ff",
+            "on-primary-fixed-variant": "#004395",
+            "on-secondary": "#490080",
+            "inverse-surface": "#e5e2e1",
+            "primary-fixed-dim": "#adc6ff",
+            "primary": "#adc6ff",
+            "error": "#ffb4ab",
+            "on-tertiary": "#502400",
+            "on-secondary-fixed": "#2c0051",
+            "on-tertiary-fixed": "#311400",
+            "tertiary-container": "#df7412",
+            "secondary-fixed-dim": "#ddb7ff",
+            "on-background": "#e5e2e1",
+            "on-primary-fixed": "#001a42",
+            "on-primary-container": "#00285d",
+            "surface-variant": "#353534",
+            "surface-container-low": "#1c1b1b",
+            "inverse-primary": "#005ac2",
+            "surface-container": "#201f1f",
+            "inverse-on-surface": "#313030",
+            "outline-variant": "#424754",
+            "tertiary-fixed": "#ffdcc6",
+            "on-error-container": "#ffdad6",
+            "secondary-fixed": "#f0dbff",
+            "background": "#131313",
+            "on-secondary-container": "#d6a9ff",
+            "error-container": "#93000a",
+            "surface-bright": "#393939",
+            "on-surface": "#e5e2e1"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "md": "24px",
+            "sm": "16px",
+            "gutter": "24px",
+            "xl": "80px",
+            "margin": "32px",
+            "base": "4px",
+            "xs": "8px",
+            "lg": "48px"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Geist"],
+            "display-lg": ["Geist"],
+            "body-sm": ["Geist"],
+            "label-code": ["JetBrains Mono"],
+            "label-caps": ["Geist"],
+            "headline-lg": ["Geist"],
+            "headline-md": ["Geist"],
+            "body-lg": ["Geist"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "label-code": ["12px", { "lineHeight": "1.4", "fontWeight": "450" }],
+            "label-caps": ["11px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "1.4", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #000000;
+      color: #e5e2e1;
+      font-family: 'Geist', sans-serif;
+    }
+    .glass-panel {
+      background: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(38, 38, 38, 0.5);
+    }
+    .inner-glow {
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .active-nav {
+      background-color: #2a2a2a;
+      color: #adc6ff;
+    }
+    .slide-thumb-active {
+      border-color: #adc6ff;
+      background: #171717;
+    }
+  </style>
+</head>
+<body class="overflow-hidden">
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-full w-[240px] bg-[#0a0a0a] border-r border-[#262626] flex flex-col z-50">
+<div class="px-margin py-8">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">Orchestra</h1>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-lg hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+        Dashboard
+      </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg active-nav text-primary font-body-lg inner-glow" href="#">
+<span class="material-symbols-outlined" data-icon="presentation_play" style="font-variation-settings: 'FILL' 1;">present_to_all</span>
+        Pitch Deck
+      </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-lg hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+        Metrics
+      </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant font-body-lg hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+        Team
+      </a>
+</nav>
+<div class="p-4 border-t border-[#262626]">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-[#171717] cursor-pointer">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-[12px]">JD</div>
+<div class="overflow-hidden">
+<p class="font-body-sm font-medium truncate">Julian Draxler</p>
+<p class="text-[10px] text-on-surface-variant font-label-code">PRO PLAN</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[240px] flex flex-col h-screen relative">
+<!-- Top Action Bar -->
+<header class="h-16 flex items-center justify-between px-margin border-b border-[#262626] bg-[#0a0a0a]/80 backdrop-blur-md z-40">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-md text-on-surface">Series A Roadmap v2</h2>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-code text-[10px]">DRAFT</span>
+</div>
+<div class="flex items-center gap-xs">
+<button class="px-4 py-2 flex items-center gap-2 rounded-lg border border-[#262626] text-on-surface-variant font-body-sm hover:border-[#404040] transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="share">share</span>
+          Share
+        </button>
+<button class="px-4 py-2 flex items-center gap-2 rounded-lg bg-primary text-on-primary font-body-sm font-medium inner-glow scale-100 hover:scale-[1.02] active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="file_download">file_download</span>
+          Export PPT
+        </button>
+</div>
+</header>
+<!-- Workspace Layout -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Slide Navigator (Sidebar-like list) -->
+<aside class="w-72 bg-[#0a0a0a] border-r border-[#262626] overflow-y-auto p-4 space-y-4">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-caps text-on-surface-variant">SLIDES (6)</span>
+<button class="p-1 rounded hover:bg-[#171717] text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</button>
+</div>
+<!-- Problem Slide -->
+<div class="group cursor-pointer">
+<div class="relative w-full aspect-video rounded-lg border-2 slide-thumb-active bg-surface overflow-hidden transition-all">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent"></div>
+<div class="p-3">
+<div class="w-8 h-1 bg-primary/30 rounded mb-1"></div>
+<div class="w-12 h-1 bg-primary/20 rounded"></div>
+</div>
+<div class="absolute bottom-2 right-2 text-[10px] font-label-code opacity-50">01</div>
+</div>
+<p class="mt-2 text-center font-body-sm text-primary font-medium">Problem</p>
+</div>
+<!-- Solution Slide -->
+<div class="group cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<div class="relative w-full aspect-video rounded-lg border border-[#262626] bg-[#0a0a0a] overflow-hidden transition-all group-hover:border-[#404040]">
+<div class="p-3">
+<div class="w-10 h-1 bg-on-surface-variant/20 rounded mb-1"></div>
+<div class="w-6 h-1 bg-on-surface-variant/10 rounded"></div>
+</div>
+<div class="absolute bottom-2 right-2 text-[10px] font-label-code opacity-30">02</div>
+</div>
+<p class="mt-2 text-center font-body-sm text-on-surface-variant">Solution</p>
+</div>
+<!-- Market Slide -->
+<div class="group cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<div class="relative w-full aspect-video rounded-lg border border-[#262626] bg-[#0a0a0a] overflow-hidden transition-all group-hover:border-[#404040]">
+<div class="flex items-center justify-center h-full">
+<div class="w-8 h-8 rounded-full border border-on-surface-variant/20"></div>
+</div>
+<div class="absolute bottom-2 right-2 text-[10px] font-label-code opacity-30">03</div>
+</div>
+<p class="mt-2 text-center font-body-sm text-on-surface-variant">Market</p>
+</div>
+<!-- Business Model -->
+<div class="group cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<div class="relative w-full aspect-video rounded-lg border border-[#262626] bg-[#0a0a0a] overflow-hidden transition-all group-hover:border-[#404040]">
+<div class="p-3 flex gap-1">
+<div class="flex-1 h-8 bg-on-surface-variant/5 rounded"></div>
+<div class="flex-1 h-8 bg-on-surface-variant/5 rounded"></div>
+</div>
+<div class="absolute bottom-2 right-2 text-[10px] font-label-code opacity-30">04</div>
+</div>
+<p class="mt-2 text-center font-body-sm text-on-surface-variant">Business Model</p>
+</div>
+<!-- Roadmap -->
+<div class="group cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<div class="relative w-full aspect-video rounded-lg border border-[#262626] bg-[#0a0a0a] overflow-hidden transition-all group-hover:border-[#404040]">
+<div class="absolute left-0 right-0 top-1/2 h-[1px] bg-on-surface-variant/20"></div>
+<div class="absolute bottom-2 right-2 text-[10px] font-label-code opacity-30">05</div>
+</div>
+<p class="mt-2 text-center font-body-sm text-on-surface-variant">Roadmap</p>
+</div>
+<!-- Team -->
+<div class="group cursor-pointer opacity-70 hover:opacity-100 transition-opacity">
+<div class="relative w-full aspect-video rounded-lg border border-[#262626] bg-[#0a0a0a] overflow-hidden transition-all group-hover:border-[#404040]">
+<div class="p-3 flex gap-2">
+<div class="w-4 h-4 rounded-full bg-on-surface-variant/20"></div>
+<div class="w-4 h-4 rounded-full bg-on-surface-variant/20"></div>
+</div>
+<div class="absolute bottom-2 right-2 text-[10px] font-label-code opacity-30">06</div>
+</div>
+<p class="mt-2 text-center font-body-sm text-on-surface-variant">Team</p>
+</div>
+</aside>
+<!-- Slide Preview Canvas -->
+<section class="flex-1 bg-black p-8 overflow-auto flex items-center justify-center">
+<div class="w-full max-w-5xl aspect-video glass-panel rounded-xl shadow-2xl relative overflow-hidden flex items-stretch">
+<!-- Abstract Background Pattern -->
+<div class="absolute inset-0 pointer-events-none opacity-20">
+
+</div>
+<!-- Slide Content Layer -->
+<div class="relative flex-1 p-16 flex flex-col justify-center">
+<div class="max-w-2xl">
+<span class="inline-block px-3 py-1 rounded bg-primary/10 text-primary font-label-code text-[12px] mb-6 border border-primary/20">THE PROBLEM</span>
+<h1 class="font-display-lg text-display-lg text-white mb-8 leading-tight">Fragmented Multi-Agent Coordination.</h1>
+<p class="font-body-lg text-on-surface-variant text-xl leading-relaxed">
+                Current AI workflows suffer from high latency and decision silos. Building complex, collaborative agent swarms requires months of boilerplate engineering.
+              </p>
+<div class="mt-12 grid grid-cols-2 gap-8">
+<div class="p-4 border-l-2 border-primary bg-primary/5">
+<p class="font-display-lg text-headline-lg text-white">40%</p>
+<p class="font-body-sm text-on-surface-variant">Efficiency leak in serial execution</p>
+</div>
+<div class="p-4 border-l-2 border-tertiary bg-tertiary/5">
+<p class="font-display-lg text-headline-lg text-white">12wks</p>
+<p class="font-body-sm text-on-surface-variant">Average time to prototype a swarm</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Interactive Pane (AI Suggestion) -->
+<div class="w-80 border-l border-[#262626] bg-[#0a0a0a]/50 backdrop-blur-xl p-6 flex flex-col">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-tertiary" data-icon="temp_preferences_custom">temp_preferences_custom</span>
+<h3 class="font-label-caps text-on-surface">AI Suggestions</h3>
+</div>
+<div class="space-y-4 flex-1 overflow-y-auto">
+<div class="p-4 rounded-lg bg-[#171717] border border-[#262626] hover:border-primary/50 cursor-pointer transition-all">
+<p class="font-body-sm text-on-surface mb-2">Enhance Data Visualization</p>
+<p class="text-[12px] text-on-surface-variant leading-snug">Replace the static stats with an animated growth chart showing the fragmentation trend.</p>
+<button class="mt-3 text-primary text-[12px] font-medium flex items-center gap-1">
+                  Apply Change <span class="material-symbols-outlined text-[14px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="p-4 rounded-lg bg-[#171717] border border-[#262626] hover:border-primary/50 cursor-pointer transition-all">
+<p class="font-body-sm text-on-surface mb-2">Tone Adjustment</p>
+<p class="text-[12px] text-on-surface-variant leading-snug">Make the problem statement more 'Investor Ready' by highlighting the Total Addressable Market (TAM).</p>
+<button class="mt-3 text-primary text-[12px] font-medium flex items-center gap-1">
+                  Regenerate Text <span class="material-symbols-outlined text-[14px]" data-icon="auto_awesome">auto_awesome</span>
+</button>
+</div>
+</div>
+<div class="mt-auto pt-6">
+<div class="p-3 bg-surface-container-high rounded-lg flex items-center gap-3">
+<input class="bg-transparent border-none focus:ring-0 text-sm flex-1 text-on-surface placeholder:text-on-surface-variant/50" placeholder="Ask AI to edit slide..." type="text"/>
+<button class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="send">send</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Floating Navigation Bar (Mobile-friendly check) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 glass-panel px-6 py-3 rounded-full flex items-center gap-6 shadow-2xl md:hidden">
+<button class="text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="grid_view" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+</button>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</button>
+</div>
+</main>
+<!-- Interactive Script for micro-interactions -->
+<script>
+    // Simple state handling for demo purposes
+    document.querySelectorAll('.group.cursor-pointer').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        // Remove active class from all
+        document.querySelectorAll('.group.cursor-pointer div').forEach(d => {
+          d.classList.remove('slide-thumb-active');
+          d.classList.add('border-[#262626]');
+          d.classList.remove('border-2');
+        });
+        document.querySelectorAll('.group.cursor-pointer p').forEach(p => {
+          p.classList.remove('text-primary', 'font-medium');
+          p.classList.add('text-on-surface-variant');
+        });
+
+        // Add to clicked
+        const innerDiv = thumb.querySelector('div');
+        innerDiv.classList.add('slide-thumb-active', 'border-2');
+        innerDiv.classList.remove('border-[#262626]');
+        
+        const label = thumb.querySelector('p');
+        label.classList.add('text-primary', 'font-medium');
+        label.classList.remove('text-on-surface-variant');
+        
+        // Scale effect
+        thumb.style.transform = 'scale(0.98)';
+        setTimeout(() => thumb.style.transform = 'scale(1)', 100);
+      });
+    });
+  </script>
+</body></html>

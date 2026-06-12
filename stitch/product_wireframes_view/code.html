@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Orchestra | Product Design Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#131313",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary": "#ffb786",
+                        "primary-fixed": "#d8e2ff",
+                        "outline": "#8c909f",
+                        "on-tertiary-fixed-variant": "#723600",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#6900b3",
+                        "tertiary-fixed-dim": "#ffb786",
+                        "secondary": "#ddb7ff",
+                        "on-primary": "#002e6a",
+                        "on-error": "#690005",
+                        "surface-dim": "#131313",
+                        "primary-container": "#4d8eff",
+                        "on-surface-variant": "#c2c6d6",
+                        "surface-container-highest": "#353534",
+                        "on-tertiary-container": "#461f00",
+                        "secondary-container": "#6f00be",
+                        "surface-tint": "#adc6ff",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-secondary": "#490080",
+                        "inverse-surface": "#e5e2e1",
+                        "primary-fixed-dim": "#adc6ff",
+                        "primary": "#adc6ff",
+                        "error": "#ffb4ab",
+                        "on-tertiary": "#502400",
+                        "on-secondary-fixed": "#2c0051",
+                        "on-tertiary-fixed": "#311400",
+                        "tertiary-container": "#df7412",
+                        "secondary-fixed-dim": "#ddb7ff",
+                        "on-background": "#e5e2e1",
+                        "on-primary-fixed": "#001a42",
+                        "on-primary-container": "#00285d",
+                        "surface-variant": "#353534",
+                        "surface-container-low": "#1c1b1b",
+                        "inverse-primary": "#005ac2",
+                        "surface-container": "#201f1f",
+                        "inverse-on-surface": "#313030",
+                        "outline-variant": "#424754",
+                        "tertiary-fixed": "#ffdcc6",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#f0dbff",
+                        "background": "#131313",
+                        "on-secondary-container": "#d6a9ff",
+                        "error-container": "#93000a",
+                        "surface-bright": "#393939",
+                        "on-surface": "#e5e2e1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "sm": "16px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "margin": "32px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "lg": "48px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "body-sm": ["Geist"],
+                        "label-code": ["JetBrains Mono"],
+                        "label-caps": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-code": ["12px", {"lineHeight": "1.4", "fontWeight": "450"}],
+                        "label-caps": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                        "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Geist', sans-serif;
+            overflow-x: hidden;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0e0e0e;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #424754;
+            border-radius: 10px;
+        }
+        .wireframe-pattern {
+            background-image: radial-gradient(#262626 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .node-connector {
+            background: linear-gradient(90deg, #adc6ff 50%, transparent 50%);
+            background-size: 8px 1px;
+        }
+    </style>
+</head>
+<body class="dark bg-background text-on-background">
+<!-- Top AppBar (JSON Component Mapping) -->
+<header class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl border-b border-outline-variant/20">
+<div class="flex justify-between items-center px-margin py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">Orchestra</span>
+<nav class="hidden md:flex gap-sm ml-lg">
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Product</a>
+<a class="font-body-lg text-body-lg text-primary font-medium transition-colors duration-200" href="#">Features</a>
+<a class="font-body-lg text-body-lg text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Pricing</a>
+</nav>
+</div>
+<button class="bg-primary-container text-on-primary-container px-sm py-xs font-medium scale-95 transition-transform duration-150 active:scale-90 rounded">
+                Sign Up
+            </button>
+</div>
+</header>
+<div class="flex pt-20 h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-[280px] bg-surface-container-lowest border-r border-outline-variant/10 hidden md:flex flex-col p-sm shrink-0">
+<div class="mb-lg">
+<p class="font-label-caps text-label-caps text-outline mb-sm uppercase tracking-widest">Workspace</p>
+<div class="space-y-1">
+<button class="w-full flex items-center gap-sm px-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-body-sm text-body-sm">Dashboard</span>
+</button>
+<button class="w-full flex items-center gap-sm px-sm py-2 rounded bg-primary-container/10 text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">schema</span>
+<span class="font-body-sm text-body-sm">Wireframes</span>
+</button>
+<button class="w-full flex items-center gap-sm px-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">palette</span>
+<span class="font-body-sm text-body-sm">Style Guide</span>
+</button>
+<button class="w-full flex items-center gap-sm px-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span class="font-body-sm text-body-sm">Assets</span>
+</button>
+</div>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-outline mb-sm uppercase tracking-widest">Active Flows</p>
+<div class="space-y-1">
+<button class="w-full flex items-center justify-between px-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">account_circle</span>
+<span class="font-body-sm text-body-sm">Auth Journey</span>
+</div>
+<span class="font-label-code text-label-code text-outline opacity-0 group-hover:opacity-100">MODIFIED</span>
+</button>
+<button class="w-full flex items-center justify-between px-sm py-2 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+<span class="font-body-sm text-body-sm">Checkout Flow</span>
+</div>
+<span class="font-label-code text-label-code text-outline opacity-0 group-hover:opacity-100">STABLE</span>
+</button>
+</div>
+</div>
+<div class="mt-auto p-sm bg-surface-container/50 rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-sm mb-xs">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+<span class="font-label-code text-label-code text-primary">Live Sync Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">2 team members currently viewing</p>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto custom-scrollbar wireframe-pattern">
+<div class="max-w-7xl mx-auto p-margin space-y-lg">
+<!-- Section 1: User Flow Diagram -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">User Flow Diagram</h2>
+<div class="flex gap-xs">
+<button class="p-2 border border-outline-variant rounded hover:bg-surface-container-high"><span class="material-symbols-outlined">zoom_in</span></button>
+<button class="p-2 border border-outline-variant rounded hover:bg-surface-container-high"><span class="material-symbols-outlined">zoom_out</span></button>
+</div>
+</div>
+<div class="relative bg-surface-container p-lg rounded-xl border border-outline-variant/20 overflow-x-auto">
+<div class="flex items-center gap-xl min-w-max py-md">
+<!-- Flow Node 1 -->
+<div class="flex flex-col items-center gap-xs">
+<div class="w-48 p-sm bg-surface-container-high border border-outline rounded-lg text-center shadow-lg">
+<span class="font-label-caps text-label-caps text-primary block mb-1">ENTRY</span>
+<p class="font-body-sm text-body-sm font-medium">Landing Page</p>
+</div>
+<div class="node-connector w-px h-12"></div>
+</div>
+<span class="material-symbols-outlined text-outline">arrow_forward</span>
+<!-- Flow Node 2 -->
+<div class="flex flex-col items-center gap-xs">
+<div class="w-48 p-sm bg-surface-container-high border border-outline rounded-lg text-center shadow-lg">
+<span class="font-label-caps text-label-caps text-tertiary block mb-1">DECISION</span>
+<p class="font-body-sm text-body-sm font-medium">Authenticated?</p>
+</div>
+</div>
+<div class="flex flex-col gap-lg">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline">subdirectory_arrow_right</span>
+<div class="w-48 p-sm bg-surface-container-high border border-outline rounded-lg text-center shadow-lg">
+<span class="font-label-caps text-label-caps text-error block mb-1">FALSE</span>
+<p class="font-body-sm text-body-sm font-medium">Sign In Modal</p>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline">subdirectory_arrow_right</span>
+<div class="w-48 p-sm bg-surface-container-high border border-primary/50 rounded-lg text-center shadow-lg">
+<span class="font-label-caps text-label-caps text-primary block mb-1">TRUE</span>
+<p class="font-body-sm text-body-sm font-medium">User Dashboard</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Screen List & Inventory -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-md">
+<div class="lg:col-span-1 bg-surface-container-lowest p-md rounded-xl border border-outline-variant/10">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-md">Screen List</h3>
+<div class="space-y-sm">
+<div class="flex items-center justify-between p-sm hover:bg-surface-container rounded-lg border border-transparent hover:border-outline-variant/20 transition-all cursor-pointer">
+<div class="flex items-center gap-sm">
+<span class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded font-label-code text-on-surface-variant">01</span>
+<p class="font-body-sm text-body-sm">Global Search</p>
+</div>
+<span class="px-2 py-0.5 bg-primary/10 text-primary font-label-code rounded">DONE</span>
+</div>
+<div class="flex items-center justify-between p-sm hover:bg-surface-container rounded-lg border border-transparent hover:border-outline-variant/20 transition-all cursor-pointer">
+<div class="flex items-center gap-sm">
+<span class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded font-label-code text-on-surface-variant">02</span>
+<p class="font-body-sm text-body-sm">Agent Settings</p>
+</div>
+<span class="px-2 py-0.5 bg-tertiary/10 text-tertiary font-label-code rounded">WIP</span>
+</div>
+<div class="flex items-center justify-between p-sm hover:bg-surface-container rounded-lg border border-transparent hover:border-outline-variant/20 transition-all cursor-pointer">
+<div class="flex items-center gap-sm">
+<span class="w-8 h-8 flex items-center justify-center bg-surface-container-highest rounded font-label-code text-on-surface-variant">03</span>
+<p class="font-body-sm text-body-sm">Node Editor</p>
+</div>
+<span class="px-2 py-0.5 bg-surface-container-highest text-outline font-label-code rounded">TODO</span>
+</div>
+</div>
+</div>
+<!-- Section 3: Mobile Wireframes -->
+<div class="lg:col-span-2 space-y-md">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface">Mobile Wireframes</h3>
+<button class="text-primary font-body-sm flex items-center gap-1">View All <span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-md">
+<!-- Mobile Mock 1 -->
+<div class="aspect-[9/19] bg-surface-container-low rounded-[32px] border-[6px] border-surface-container-highest relative overflow-hidden group shadow-2xl">
+<div class="absolute inset-x-0 top-0 h-8 flex justify-center items-center">
+<div class="w-20 h-4 bg-surface-container-highest rounded-full"></div>
+</div>
+<img class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-opacity" data-alt="A high-fidelity mobile wireframe for a futuristic design application dashboard. The interface uses a minimal dark color palette of blacks, greys, and primary blues. The layout features sleek line icons, high-contrast typography, and abstract geometric shapes representing data visualizations. The lighting is digital and clean, emphasizing a sophisticated technical environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAogV6VJmX8cHlqr6tl94m4ggSVNWfteXgxkg-Gg4o0ycMjR5jjLWS5xeLXCoIMclL1lT2Sez60N0d9wJf4nAbLZH5AGYboGZvCtIz3ySM6bhs9HeiTHEjA-amlZCQi7Kvak0WOnJQ9Up_K0PJuNsQ1149NB1IBX0P3rk9PSR9LUYyY_BIzVvybDo6KlcGWItzJpvYVW7jJJDVcFKTVxHAajfh9jWQ-VXWUJkXoo2CsXfhMY7eWfLkUeP5kwU0JaBzWDE7VlFJlsXMt"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-label-code text-label-code text-white bg-black/50 px-2 py-1 rounded backdrop-blur-md">WIRE_01_NAV</span>
+</div>
+</div>
+<!-- Mobile Mock 2 -->
+<div class="aspect-[9/19] bg-surface-container-low rounded-[32px] border-[6px] border-surface-container-highest relative overflow-hidden group shadow-2xl">
+<div class="absolute inset-x-0 top-0 h-8 flex justify-center items-center">
+<div class="w-20 h-4 bg-surface-container-highest rounded-full"></div>
+</div>
+<img class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-opacity" data-alt="A clean, minimalist mobile UI layout for a developer tool dashboard. The mockup utilizes a monochromatic theme with deep charcoal backgrounds and subtle silver accents. Elements include low-fidelity wireframe boxes for user profiles, activity streams, and system settings. The aesthetic is extremely precise and technical, mirroring a high-end coding environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8REDtY21NBveSRv5BcCtQvbp89uXfYPYlzm6SSHKiwdExTvGq_7GCKHgx2mbl7pV1tHWNoTqhQrwMHgO1TY2_GK4trfhJboujBmJCpBNr8xWVeCgqytA8kS7PUznfNvO9KSUvAXc51KIffAidC5ODFvwUlapHWBv7HTO9sPPWD_dGFTyu8rgKwLxgCZTv91Lh384tYsh0r_skzOvotMG_gom-PrFwj2EtJT3c13lPvPSwZfYDFefaWeN4_IB655m9sLwre73o4KXb"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-label-code text-label-code text-white bg-black/50 px-2 py-1 rounded backdrop-blur-md">WIRE_02_PROF</span>
+</div>
+</div>
+<!-- Mobile Mock 3 -->
+<div class="aspect-[9/19] bg-surface-container-low rounded-[32px] border-[6px] border-surface-container-highest relative overflow-hidden group shadow-2xl hidden sm:block">
+<div class="absolute inset-x-0 top-0 h-8 flex justify-center items-center">
+<div class="w-20 h-4 bg-surface-container-highest rounded-full"></div>
+</div>
+<img class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-60 transition-opacity" data-alt="Modern mobile app design wireframe displaying a sophisticated node-based logic system. The visual style is dark-themed with thin white strokes and electric blue connection lines. The layout is structured as a series of modular cards with minimal text labels. The atmosphere is professional, tech-focused, and highly detailed, conveying complex system architecture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuALJ74rPt5oSwMQ1JN0F8HZkjfFFv1pPKxkSJBCKj2-Srwd1zZ5ADPdSa00vshNcMzlYthEpqj_84q2A1qhpzjj82I5BjrfjQkxoMHxAFfBHRD52h2KNTeLoh6tNP9V2a5iM2sO60vedtPp0zV4vRuS6ETQ1c8gz1l2cQUSXTnyxCjice43Ul7dpGLBgHFm7g4a61xy-d_1TBbOF3ZfFtPutZA6N3lLQvi-NsLgC0pdlIQKZimF_wbvNrfODMnMLNJpMxwEIIYQqGGb"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="font-label-code text-label-code text-white bg-black/50 px-2 py-1 rounded backdrop-blur-md">WIRE_03_EDITOR</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Web Wireframes (Bento Grid) -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Web Wireframes</h3>
+<div class="flex items-center gap-sm">
+<span class="font-body-sm text-on-surface-variant">View:</span>
+<select class="bg-surface-container border-outline-variant/20 rounded font-body-sm px-xs py-1">
+<option>Draft v1.4</option>
+<option>Final Proposal</option>
+</select>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-md h-[600px]">
+<div class="md:col-span-3 bg-surface-container-lowest rounded-xl border border-outline-variant/10 p-md relative overflow-hidden group">
+<div class="absolute inset-0 border-[12px] border-surface-container-high/20 pointer-events-none"></div>
+<div class="flex flex-col h-full">
+<div class="flex items-center gap-xs mb-md">
+<div class="w-3 h-3 rounded-full bg-error/40"></div>
+<div class="w-3 h-3 rounded-full bg-tertiary/40"></div>
+<div class="w-3 h-3 rounded-full bg-primary/40"></div>
+<div class="ml-4 h-4 w-1/3 bg-surface-container rounded"></div>
+</div>
+<div class="flex-1 bg-surface-container rounded-lg border border-dashed border-outline-variant/40 flex items-center justify-center">
+<img class="w-full h-full object-cover grayscale opacity-20 group-hover:opacity-40 transition-opacity" data-alt="A sprawling desktop application dashboard wireframe rendered in a professional dark-mode design system. The scene captures a complex data-rich interface with multiple panels, grid systems, and charting components. The color palette is restricted to deep blacks and greys with subtle blue highlights. The composition is clean, balanced, and emphasizes a high-performance technical workspace." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9vYIrF2zFjrvH_SbjS0e7V1vMqkI4Q_oBEqwHNrkGipaiQsToX1YGYrlIIBgmWmYUj4O56FCDsxuveKcjHRPaZMKIPCrBjnrkhzQflumR0GmWc4aTqUDgDMNvAiemXBepysHa2WGktWmSPE7sP_-BtjrvUqXsOxMNfhuGKIa5dpHV8T5xeC52qurAA_hTe4gE7eGXH5jYqtjvsd2aSesOhDNwTg44CT_Yo6BmUX9LJ4lEUD4uabAY-86AjlzOOOCcEzk5KkJFuM-2"/>
+<span class="absolute font-headline-md text-headline-md font-bold text-outline uppercase tracking-widest opacity-30">Main Workspace Layout</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-high rounded-xl p-md flex flex-col justify-between border border-outline-variant/30">
+<p class="font-label-caps text-label-caps text-outline">Utility Panel</p>
+<div class="space-y-sm">
+<div class="h-8 bg-surface-container-lowest rounded border border-outline-variant/10"></div>
+<div class="h-8 bg-surface-container-lowest rounded border border-outline-variant/10"></div>
+<div class="h-24 bg-primary/5 rounded border border-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">add_box</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant/10 p-md flex items-center justify-center group overflow-hidden">
+<img class="absolute inset-0 w-full h-full object-cover grayscale opacity-10 group-hover:scale-110 transition-transform duration-700" data-alt="A specialized data analytics wireframe component for a desktop interface. The image displays a sequence of intricate bar charts, line graphs, and numerical datasets in a minimalist dark-themed style. The visual language is sharp and precise, utilizing high-contrast typography and a technical developer-first aesthetic. The mood is analytical and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRw7pPTIt8YqaW3aiUJ9ke2NrRu_4V2ucDWGVZB75Crbelz5ZQv5RbbiIKpcX58ZYVk7agFOTcyuQfmSbFq6LzgQtyrjLAoLz_6eQCCPfrlrgfLkbetI43EeN_LSRycO29at_bn48yJzl57r4HyYpM1qYhLc6c8cNfQ2Cp4TGItMDvURYte67KPKVaIvV-N0Q6_pYqgDdC_vi4m3-gRKCFJbKkjOX3h-40q1PbT01oegC3pMpiyDM_0JvL5TrYChm9RkJWDnMxis6F"/>
+<p class="relative font-body-sm text-body-sm text-center px-lg">Secondary Analytics Visualization</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer (JSON Component Mapping) -->
+<footer class="w-full py-lg mt-xl bg-surface-container-lowest border-t border-outline-variant/10">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin max-w-7xl mx-auto gap-md">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">Orchestra</span>
+<nav class="flex flex-wrap justify-center gap-md">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Product</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Features</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Pricing</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Privacy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">Terms</a>
+</nav>
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-80">© 2024 Multi-Agent Hackathon Builder. All rights reserved.</p>
+</div>
+</footer>
+</main>
+</div>
+<!-- Floating Tool Overlay -->
+<div class="fixed bottom-margin right-margin flex flex-col gap-sm">
+<button class="w-12 h-12 bg-primary-container text-on-primary-container rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="w-12 h-12 bg-surface-container-high text-on-surface border border-outline-variant rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">comment</span>
+</button>
+</div>
+<script>
+        // Simple micro-interaction for active states
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Simulating collaborative cursor movements or simple atmospheric effects
+        const canvas = document.querySelector('main');
+        canvas.addEventListener('mousemove', (e) => {
+            // Placeholder for subtle interactions if needed
+        });
+    </script>
+</body></html>

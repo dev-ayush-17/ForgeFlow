@@ -1,0 +1,49 @@
+# ======================
+# Python
+# ======================
+
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+.env.local
+.env.example
+backend/.env
+
+# ======================
+# Node / Next.js
+# ======================
+
+node_modules/
+.next/
+out/
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ======================
+# VS Code
+# ======================
+
+.vscode/
+
+# ======================
+# OS Files
+# ======================
+
+.DS_Store
+Thumbs.db
+
+# ======================
+# Build Artifacts
+# ======================
+
+coverage/

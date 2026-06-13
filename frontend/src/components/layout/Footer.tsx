@@ -7,10 +7,10 @@ export function Footer() {
       <div className="container mx-auto max-w-6xl px-4 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex flex-col gap-2">
           <Link href="/" className="font-sans font-bold text-xl tracking-tight text-foreground">
-            Orchestra
+            Forge Flow
           </Link>
           <p className="text-sm text-muted-foreground">
-            © 2024 Multi-Agent Hackathon Builder. All rights reserved.
+            © 2026 Forge Flow. All rights reserved.
           </p>
         </div>
         

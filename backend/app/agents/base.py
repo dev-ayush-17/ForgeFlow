@@ -59,8 +59,8 @@ class BaseAgent(ABC):
         if is_demo_mode:
             logger.info(f"[{self.name}] DEMO_MODE is ON. Using mock response.")
             raw = self._get_mock_response()
-            # Simulate a small network delay so frontend animations still work smoothly
-            await asyncio.sleep(1.5)
+            # Simulate realistic network delay so frontend animations play out naturally
+            await asyncio.sleep(7)
             result = self._parse_output(raw)
             logger.info(f"[{self.name}] Completed successfully (Mock).")
             return result

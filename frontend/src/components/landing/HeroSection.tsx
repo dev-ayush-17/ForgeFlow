@@ -71,21 +71,6 @@ export function HeroSection() {
             </Button>
           </div>
         </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-20 flex flex-col items-center gap-6"
-        >
-          <span className="text-xs font-mono text-muted-foreground tracking-widest uppercase">Trusted by builders at</span>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <span className="font-bold text-xl">LINEAR</span>
-            <span className="font-bold text-xl">VERCEL</span>
-            <span className="font-bold text-xl">ANTHROPIC</span>
-            <span className="font-bold text-xl">SCALE</span>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

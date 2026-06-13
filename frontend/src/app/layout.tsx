@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Orchestra | From Idea to Execution in Minutes",
+  title: "Forge Flow | From Idea to Execution in Minutes",
   description: "AI-native project planning platform that transforms a startup idea into a complete execution-ready blueprint.",
 };
 
